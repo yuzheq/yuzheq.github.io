@@ -1,0 +1,1870 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="计算机网络传输层, 操作系统 计算机网络 java系列">
+    <meta name="baidu-site-verification" content="fmlEuI34ir" />
+    <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
+    <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
+    <meta name="description" content="1.1 概述和传输层服务传输层位于应用层与网络层之间，起着承上启下的重要作用。概括的说，传输层协议为运行在不同主机上的进程提供逻辑通信的功能。而从TCP/IP协议族的组成来看，它向上使进程间的通信成为可能，向下加强了网络层提供的尽力而为式的">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>计算机网络传输层 | 归处的博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?ce84511d3df71640a9378a69f6293044";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+    <script>
+        (function(){
+        var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+        document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+    </script>
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">归处的博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <i class="fa fa-comments"></i>
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">归处的博客</div>
+        <div class="logo-desc">
+            
+            山高路远，静水深流
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-comments"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/godweiyang/hexo-matery-modified" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/godweiyang/hexo-matery-modified" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/28.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        计算机网络传输层
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" target="_blank">
+                            <span class="chip bg-color">计算机网络</span>
+                        </a>
+                        
+                        <a href="/tags/%E6%8A%93%E5%8C%85/" target="_blank">
+                            <span class="chip bg-color">抓包</span>
+                        </a>
+                        
+                        <a href="/tags/%E9%80%9A%E7%94%A8%E6%A8%A1%E5%BC%8F/" target="_blank">
+                            <span class="chip bg-color">通用模式</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-07-12
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    归处
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    11.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    40 分
+                </div>
+                
+                
+
+                
+                <div id="busuanzi_container_page_pv" class="info-break-policy">
+                    <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                    <span id="busuanzi_value_page_pv"></span>
+                </div>
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="1-1-概述和传输层服务"><a href="#1-1-概述和传输层服务" class="headerlink" title="1.1 概述和传输层服务"></a>1.1 概述和传输层服务</h2><p>传输层位于应用层与网络层之间，起着承上启下的重要作用。概括的说，<strong>传输层协议为运行在不同主机上的进程提供逻辑通信的功能</strong>。而从TCP/IP协议族的组成来看，它向上使<strong>进程间的通信成为可能</strong>，向下<strong>加强了网络层提供的尽力而为式</strong>的服务。那具体传输层如何使用服务，并在此基础上加强，最后提供服务的呢？我们还需要继续勾勒这个蓝图：</p>
+<p>在此之前，首先来看书中给出的例子——</p>
+<p>有两个关系不错的家庭A和B，家庭A的5位家庭成员都会向家庭B的5位家庭成员写信。写好信后交由邮递公司将其送到家庭B的信箱中，家庭B的长子再将信从信箱中取出交给弟弟妹妹们。我们来对这个例子做一个类比：</p>
+<p>两个家庭可以看做两个主机，弟弟妹妹们可以看做是应用进程，长子可以看做是传输层协议，邮递服务可以认为是网络层提供的服务，应用层的报文即是信的内容。</p>
+<p>从这个案例中，我们可以提取出一些<strong>有趣的信息</strong>——</p>
+<ul>
+<li>邮件服务有可能出现纰漏，比如会传错，丢失等，即<code>网络层传输的是不可靠的服务，它不对分组做有效力的保证</code>。</li>
+<li>邮箱里的信件是乱序的，但通过长子来传递到弟弟妹妹的信件却是有序的，即<code>传输层协议会对可靠性做保证，而其应用的机制则是RDT原理</code>。</li>
+<li>长子不需要跑去邮局取信件，而只需要定期检查邮箱就行啦。即传输层协议被定义在端系统，还是那句话，<code>网络核心的功能其实是在网络边沿实现的</code>。</li>
+<li>如果邮局没有在规定时间内传递邮件，那在此期间在家里就不可能取到信件。即<code>传输层的服务明显受限于网络层提供的服务</code>。</li>
+<li>如果邮箱中有很多信件，长子可以选择性的先取出一些邮件。即<code>传输层提供流量管理和拥塞控制的服务</code>。</li>
+<li>长子在取邮件时，首先需要需要拆开信封，再取出信件。即<code>目标端可以实现解复用</code>。</li>
+</ul>
+<p>除了上面将传输层当做<strong>整体</strong>看待来分析它的特点与实现以外，我们还需要将传输层拆解，广为人知的是，传输层提供TCP和UDP两个协议，</p>
+<p><code>TCP</code>：TCP提供的服务是可靠的，保序的，有拥塞控制，流量管理机制的，面向连接的，涉及复用与解复用，数据以<strong>字节流</strong>的形式传输。</p>
+<p><code>UDP</code>:   UDP提供的服务是不可靠的，不保序的，不面向连接的，数据以<strong>数据报</strong>的形式传输。</p>
+<p>蓝图已经画就，我们来用笔墨筑起传输层的万丈高楼——</p>
+<h2 id="1-2-多路复用与解复用"><a href="#1-2-多路复用与解复用" class="headerlink" title="1.2 多路复用与解复用"></a>1.2 多路复用与解复用</h2><p>我们在PC上可以同时运行QQ,网易云.它们是从属于不同的进程，所以当传输层向上层传输信息时，需要标识给哪一个进程，也就是需要使用<strong>Socket来标识一个进程</strong>，那向上传输的内容，除了Socket，显然还需要有报文。<strong>报文中包含传输层的首部字段和MSG</strong>。这里的描述其实就是解复用的过程，显然，我们在之前已经接触过。下面我们更具体地描述传输层的复用与解复用。</p>
+<ul>
+<li><code>复用：</code>在源主机从不同的套接字中收集数据块，并<strong>为每个数据块封装首部信息</strong>，生成报文段，最终将报文段交付于网络层。</li>
+<li><code>解复用：</code>将传输层报文段中的数据交付给应用进程的过程</li>
+</ul>
+<p>也就是说，传输层的多路复用与解复用实现的就是<code>将主机到主机的交付服务延伸到应用程序到应用程序之间</code>，它关注的问题无非是<strong>将报文传给谁，报文中都包括什么</strong>。</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707210324385.png" alt="image-20210707210324385"></p>
+<p>可以看出，复用与解复用的核心是通过套接字来完成的。而通过上一章节的知识，我们知道TCP和UDP的套接字所引用的信息是不一样的。我们分情况来看——</p>
+<h3 id="无连接的多路复用与解复用"><a href="#无连接的多路复用与解复用" class="headerlink" title="无连接的多路复用与解复用"></a>无连接的多路复用与解复用</h3><p>我们通过图解来解析UDP多路复用的过程——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707210337051.png" alt="image-20210707210337051"></p>
+<p><code>饮</code>：主机A中的传输层创建一个传输层报文，<strong>报文包含应用程序数据，源端口号19157，目的端口号46428和其他两个值</strong>。接着，传输层将该报文段传输给<strong>网络层</strong>，网络层再将报文段封装到一个<strong>IP数据报</strong>中，并通过网络链路交付给接收主机。</p>
+<p><code>啄</code>：接收主机传输层检查该报文段中的<strong>目的端口号46428</strong>，并将该报文段交付给端口号46428所<strong>标识的套接字</strong>。</p>
+<p>这里有一点可能会引起<strong>困惑</strong>的地方：socket是如何参与这个过程的。首先明确的是，<strong>socket是不被包含在报文段中的</strong>。UDP的Socket包含目的IP，目的端口号，它仅用于处理源端口或者目标端口的<strong>识别</strong>，即<strong>层间接口</strong>。但报文是实际参与通信过程的。这里的socket就像是一个<strong>开门的钥匙</strong>。</p>
+<h3 id="面向连接的多路复用与解复用"><a href="#面向连接的多路复用与解复用" class="headerlink" title="面向连接的多路复用与解复用"></a>面向连接的多路复用与解复用</h3><p>同样的，开局一张图——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224235450.png" alt="image-20210707224235450"></p>
+<p>区别于UDP，TCP的socket所引用的信息是一个四元组，即——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224252958.png" alt="image-20210707224252958"></p>
+<p>额，PID就不用管了，当一个报文段被交付给应用进程时，它需要使用四元组的socket来判别报文段应该被交付给具体哪一个应用进程。</p>
+<p>如果我们要求在传输层上只实现<strong>必要的最简单协议</strong>，那UDP完成符合这样的要求。UDP的全称是<strong>用户数据报协议</strong>。它仅在网络层的基础上提供<strong>必要的复用，解复用，以及简单的校验和</strong>。这使得它的功能基本上和网络层一致。</p>
+<p>我们知道，网络层提供的服务是不可靠的，所以使用UDP的传输层提供的服务同样不可靠。这意味着它不需要握手，即不面向连接。数据有可能发生乱序，重复。而假设发生了这种错误，客户端如何处理呢？它会直接<strong>丢弃</strong>。</p>
+<p>这种简洁的设计会有它的用武之地吗？当然，<strong>简洁也是一种优雅</strong>，它简单所以头部信息少，传输快，它不需要建立连接，也自然没必要维护连接的状态。甚至一些应用是在UDP的协议上构建的——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224304322.png" alt="image-20210707224304322"></p>
+<p>那这是否意味着基于UDP的应用是不可靠的呢？不完全是，<strong>在应用程序做可靠传输的处理</strong>是一种可选的方式。</p>
+<p>我们再来拨云见日地看看UDP的报文结构：</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224316644.png" alt="image-20210707224316644"></p>
+<p>值得一提的是UDP仍然提供了必要的简单检错机制，即<strong>校验和</strong>，来看校验和的原理——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224330412.png" alt="image-20210707224330412"></p>
+<p>即我们在源端得到测试的和，如果有进位，则再回卷得到和。数据报传输到目标端以后，目标端将<strong>校验和的反码与源端得到的校验和相加</strong>，如果相加为全1，则校验通过，反之不通过。</p>
+<h2 id="1-4-重点：可靠数据传输原理"><a href="#1-4-重点：可靠数据传输原理" class="headerlink" title="1.4 重点：可靠数据传输原理"></a>1.4 重点：可靠数据传输原理</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>可靠数据传输是一个<strong>一般性的问题</strong>，它不仅在传输层使用这个机制，在网络层和应用层也可以实现。而下一个小节中我们将以最通用的传输层为例介绍可靠数据传输协议RDT。</p>
+<p>在编程时，我们通常使用这样的思维：即<code>首先将具体问题转化为抽象的数学问题，再使用编程语言将数学问题实现</code>，在学习rdt时，这种思路同样适用。</p>
+<p>首先来看可靠数据传输面临的场景：对于应用层来说，传输层通过可靠数据传输的机制，并使用<strong>可靠的信道</strong>来向应用层提供服务——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224342304.png" alt="image-20210707224342304"></p>
+<p><code>那这个可靠的服务是如何实现的呢</code>？显然是通过调用下层服务。从而对本层服务做加强来实现的，我们将这一过程<strong>抽象成原语实现</strong>，我们将这些原语具体描述，他们发挥着这样的功能——</p>
+<ul>
+<li><code>rdt_send:</code>被上层调用，将数据交付给下层的发送方实体。</li>
+<li><code>udt_send:</code>被rdt调用，将分组通过不可靠的信道发送给接收方。</li>
+<li><code>rdt_rcv:</code>分组到达接收方时被调用。</li>
+<li><code>deliver_data:</code>被rdt调用，将数据交付给上层。</li>
+</ul>
+<p>我们需要通过rdt来实现<strong>发送方和接收方动作的抽象</strong>，但这种抽象是基于不可靠的信道，它可能会发生<strong>乱序，重复，篡改</strong>等问题，直接给出解决方案着实有点难为人。所以这里引入了一种处理复杂问题的思路，即<strong>渐进式解决</strong>。</p>
+<p><code>具体的说，我们一层层地去掉那些美好的假设，然后在一个可行方案的基础上逐渐完善</code>。我们的任务仅仅是实现一个能够完成必要功能的rdt协议，所以双向传输可以简化为单向传输，此外，给出有助于解决问题的通用模型也势在必行。也就是有限状态机FSM，在学习数字系统设计时，接触过使用<strong>FSM描述的空调状态机</strong>。不想除了考试，居然还能有缘再见。在课堂终于学到有用的知识了。。。</p>
+<p>FSM是这样设计的：</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224353943.png" alt="image-20210707224353943"></p>
+<p>至此，前置知识就完结了，故事的大幕就此拉开——</p>
+<h3 id="rdt1-0"><a href="#rdt1-0" class="headerlink" title="rdt1.0"></a>rdt1.0</h3><p>这里<code>假设信道完全可靠</code>，它没有比特出错，甚至不会分组丢失，此时的rdt协议,恕我说句：工具人~。</p>
+<p>用状态机来描述一下此时的发送方与接收方——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224406899.png" alt="image-20210707224406899"></p>
+<p>这个显然还没有复杂度需要详细描述的地步，next~</p>
+<h3 id="rdt2-0"><a href="#rdt2-0" class="headerlink" title="rdt2.0"></a>rdt2.0</h3><p>在2.0版本，我们就要抛弃掉一些幻想，这时候的信道不那么可靠，它可能会发生<code>比特的错误</code>。之前在聊UDP时谈及UDP报文结构中使用校验和来做差错检测，当然TCP也有这个机制。检测出来后，怎么更正呢？自然是重发，那<code>如何标识出错的状态</code>呢？</p>
+<p>这就需要引入<code>标记量</code>。假如接受方检测到比特出错，就发送显示的发送错误标志，也就是<code>NAK</code>，俗称：反向谢谢；而当检测后发送无误，就发送显示的发送正确标志，这回是正向的谢谢：<code>ACK</code>。</p>
+<p>同样的，向量机描述——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224420197.png" alt="image-20210707224420197"></p>
+<p>这时，状态机已经没那么友好了，我们简要描述一下——</p>
+<ul>
+<li><code>发送方：</code>当rdt接收到应用层的数据后，将<code>数据与校验和组成传输报文</code>通过不可靠的信道发送给接收方，然后发送方等待接收方的回应。当等待到的是ACK时，继续等待上层调用。</li>
+<li><code>接收方：</code>接收方接收来自不可靠信道的数据，然后<code>做校验</code>，当校验出错时发送NAK,校验正确时发送ACK。</li>
+</ul>
+<h3 id="rdt2-1"><a href="#rdt2-1" class="headerlink" title="rdt2.1"></a>rdt2.1</h3><p>咦，怎么又出现了2.1，自然是因为2.0实在不堪大用。2.0版本的确相比1.0版本迈出了一大步，但它本身存在致命的缺陷，也就是<strong>ACK,NAK本身也有可能发送错误</strong>。rdt的机制应该也必须是健壮的，所以当接收到不可识别的信息时<strong>有必要重发数据包</strong>。所以对数据包的标识就这么顺水推舟的发生了.即<strong>对分组加序号</strong>。但这里只使用1位，即2种可能结果标识正在处理的分组。这是因为目前仍处于<strong>STOP AND WAIT阶段</strong>，一次发送一个数据包，用0和1来标识要处理的数据包就行啦。但如何处理重复呢？<strong>丢弃</strong>发送时间较早那个的数据包。</p>
+<h4 id="接收方处理出错的ACK-NAK"><a href="#接收方处理出错的ACK-NAK" class="headerlink" title="接收方处理出错的ACK/NAK"></a>接收方处理出错的ACK/NAK</h4><p>老规矩——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224431777.png" alt="image-20210707224431777"></p>
+<p>这时接收方在2.0版本的基础上增加了对分组序号的识别，再来看发送方的处理——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224444037.png" alt="image-20210707224444037"></p>
+<p>看似很复杂，但实则只是穷举了对于不同分组的类似处理，毕竟只需要考虑两个分组，可以任性地穷举。来看下具体的场景——</p>
+<p><img src="http://qnuez6z2b.hn-bkt.clouddn.com/typora/image-20210223150554157.png" alt="image-20210223150554157"></p>
+<h3 id="rdt2-2"><a href="#rdt2-2" class="headerlink" title="rdt2.2"></a>rdt2.2</h3><p>2.2版本本质上和2.1版本并无二致，但出于简洁的考虑，只使用ACK，而不用NAK。那具体怎么操作的呢？</p>
+<p>假设有这样一个场景——</p>
+<blockquote>
+<p>发送方发送<strong>数据包1</strong>，接收方检测出错了，所以发送<strong>ACK0</strong>给发送方。发送方默念一句你丫的，然后重新发送数据包1.双方继续和谐地传递着数据包。</p>
+</blockquote>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224454789.png" alt="image-20210707224454789"></p>
+<p>一看就会的图解——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224504993.png" alt="image-20210707224504993"></p>
+<p>这里不再给出状态机描述，它的确适合转换为编程语言。但与人交互还是上图更友好些。</p>
+<h3 id="rdt3-0"><a href="#rdt3-0" class="headerlink" title="rdt3.0"></a>rdt3.0</h3><p>解决了乱序，比特出错。仍旧还有<strong>分组丢失</strong>的问题，如果按照rdt2.2机制，分组丢失后发送方接收方都鸦雀无声，陷入了<strong>死锁，浪费CPU资源</strong>。所以需要加入<strong>超时重传机制</strong>。</p>
+<p>即当分组发送出去后，计时器开始倒计时，如果计数到0还没有收到响应，那就重传。机制的核心在于<strong>计时的确定</strong>，<strong>网络状态是很难预测</strong>的，它的拥堵状况可以类似于高斯分布，我们需要使用数学中概率论的知识尽可能确定时间。当然，一个相对准确的计时器还需要<strong>相当长的路要走</strong>。</p>
+<p>诚然，凡事讲究善始如终，此处应有状态机——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224518042.png" alt="image-20210707224518042"></p>
+<ol>
+<li>首先发送方等待应用层调用，传输层组织好报文结构后，通过不可靠的信道将分组0传输给接收方，并启动超时定时器；</li>
+<li>状态切换到等待ACK0的响应，如果超时或出错(ACK1)，则重传，如果接收到ACK0，状态切换至等待应用层调用1；</li>
+<li>偷懒一手，同上。</li>
+</ol>
+<hr>
+<p>至此，rdt3.0已经是用于传输单个分组的无懈可击的协议，但在信道带宽大的情况下，rdt3.0的性能非常感人。这就好比八车道的高速公路全程只准跑一辆自行车。这显然很难以忍受，所以如何一次性发送多个分组而无须等待确认是必须要解决的问题。</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224528848.png" alt="image-20210707224528848"></p>
+<p>我们将这种发送多个分组可以看做是填充到一条流水线中。因此解决这个问题的机制被称为<strong>流水线协议</strong>。流水线协议在rdt3.0基础上增加了<strong>传输分组的粒度</strong>。但它同时带来的问题可一点也不少——</p>
+<ul>
+<li>分组的序号显然只用0和1是不够的，必须<strong>扩大分组序号的范围</strong>，来唯一地标识一个分组；</li>
+<li>分组传输与接收的速率不一致，需要在接收方增加<strong>缓存机制</strong>，此外，发送方在发送分组以后可能处于两种状态：<code>等待确认,确认完成</code>。所以发送方的分组需要分区，即发送方也需要缓存机制；</li>
+<li>当分组出现损坏，丢失，延迟时如何处理呢？根据场景有两种可选的方式：<code>GBN(回退N步)和SR(选择重传)</code>.</li>
+</ul>
+<hr>
+<p>这两种处理差错的方式又都是基于<strong>通用的滑动窗口</strong>来实现的，滑动窗口是在<strong>缓冲区的基础上</strong>运作的，我们先来了解发送缓冲区及接收缓冲区——</p>
+<ul>
+<li><code>发送缓冲区：</code>缓冲区即是内存中的一块区域，它有大小属性，这里的发送缓冲区大小可以为1，即RDT3.0,当大小&gt;1时，即为流水线协议。这里的发送缓冲区用于<strong>存放已发送未确认的分组</strong>，以便用于检错重发或超时重传。</li>
+<li><code>接收缓冲区：</code>是为了解决分组在信道中传输的速率与接收方接收的<strong>速率不一致</strong>的问题所引入的。它的大小为1时即为RDT3.0,当发送缓冲区大小&gt;1时，接收缓冲区可以为1，此时为GBN协议，如果接收缓冲区&gt;1,则为SR协议。</li>
+</ul>
+<p>那如何表示缓冲区动态传输的过程呢？这就需要引入滑动窗口——</p>
+<h3 id="发送窗口"><a href="#发送窗口" class="headerlink" title="发送窗口"></a>发送窗口</h3><p>滑动窗口用来表示<code>发送缓冲区的范围</code>，即实际的<code>已发送未确认的分组个数</code>，我们通过图解来认识这个动态的过程——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224540604.png" alt="image-20210707224540604"></p>
+<p>此时，没有分组发送，缓冲区大小N=5，滑动窗口前沿=后沿，窗口大小=前沿-后沿=0。</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224551296.png" alt="image-20210707224551296"></p>
+<p>接着，一个分组被发送，前沿移动一位，滑动窗口大小=前沿-后沿=1.此时分组0处于已发送未确认状态。</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224601189.png" alt="image-20210707224601189"></p>
+<p>此时，5个分组都被发送，缓冲区已满，滑动窗口大小=前沿-后沿=5=缓冲区大小。</p>
+<hr>
+<p>这个过程我们是假设没有分组收到确认，现在我们打开潘多拉魔盒，认为已经有分组已经收到确认，情况就有所不同了——<br>!<img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224616355.png" alt="image-20210707224616355"></p>
+<p>这时，<code>分组0得到确认，窗口后沿移动</code>，此时前沿仍然指向最后一个进入缓冲区的已发送未确认分组。</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224627690.png" alt="image-20210707224627690"></p>
+<p>然后，分组1也得到确认，窗口后沿移动。有两个分组5,6被发送，进入缓冲区等待确认。窗口前沿移动到6的位置。</p>
+<hr>
+<h3 id="接收窗口"><a href="#接收窗口" class="headerlink" title="接收窗口"></a>接收窗口</h3><p>发送窗口告一段落，来类比地看接收窗口，接收窗口可以控制哪些分组可以接收：</p>
+<ul>
+<li><code>收到的分组序号落在接收窗口内可以接受</code>；</li>
+<li>落在接收窗口外，则丢弃。</li>
+</ul>
+<p>此外，接收窗口根据出错的概率分为两种情况，对应两种协议——</p>
+<h4 id="GBN"><a href="#GBN" class="headerlink" title="GBN"></a>GBN</h4><p>接收窗口的尺寸等于1，即<code>只能顺序接收</code>：</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224639851.png" alt="image-20210707224639851"></p>
+<p>接收窗口首先在分组0的位置，此时只有分组0的会被接收，如果接收到的是分组1，则丢弃。假设接收方接收到分组n,则表示小于等于分组n的所有分组都已经被接收，即<strong>累计式确认</strong>。</p>
+<h4 id="SR"><a href="#SR" class="headerlink" title="SR"></a>SR</h4><p>接收窗口的尺寸大于1，可以乱序接收：</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224650324.png" alt="image-20210707224650324"></p>
+<p>起初，接收窗口中有分组0,1,2,3.收到分组0,1后，接收窗口向前滑动。但如果分组没有按序到来，会发生什么呢？</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224701886.png" alt="image-20210707224701886"></p>
+<p>可以看到，当高序号的分组到来后<code>，仍旧将其缓存，但并不移动滑动窗口</code>，只有当低序号的分组到来后，窗口才会整体后移——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224711512.png" alt="image-20210707224711512"></p>
+<p>最后，可以总结出SR协议为非累积式接收。</p>
+<hr>
+<h4 id="正常情况下的窗口互动"><a href="#正常情况下的窗口互动" class="headerlink" title="正常情况下的窗口互动"></a>正常情况下的窗口互动</h4><p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224721902.png" alt="image-20210707224721902"></p>
+<h4 id="异常情况下的窗口互动"><a href="#异常情况下的窗口互动" class="headerlink" title="异常情况下的窗口互动"></a>异常情况下的窗口互动</h4><p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224736296.png" alt="image-20210707224736296"></p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224827566.png" alt="image-20210707224827566"></p>
+<h4 id="用FSM描述的GBN"><a href="#用FSM描述的GBN" class="headerlink" title="用FSM描述的GBN"></a>用FSM描述的GBN</h4><ol>
+<li><p>发送方</p>
+<p>首先声明这些变量代表的含义：<code>N为窗口长度，base为窗口后沿，nextseqnum为满足发送条件但因缓冲区已满没有发送的分组序号</code>，</p>
+</li>
+</ol>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224840765.png" alt="image-20210707224840765"></p>
+<ol start="2">
+<li><p>接收方</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224850680.png" alt="image-20210707224850680"></p>
+</li>
+</ol>
+<h4 id="运行中的SR"><a href="#运行中的SR" class="headerlink" title="运行中的SR"></a>运行中的SR</h4><p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224903011.png" alt="image-20210707224903011"></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>GBN适用于<code>出错率低</code>的场景，<code>而链路容量大，回退代价高</code>的场景则是SR更优。</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224915038.png" alt="image-20210707224915038"></p>
+<h2 id="1-5-面向连接的传输——TCP"><a href="#1-5-面向连接的传输——TCP" class="headerlink" title="1.5 面向连接的传输——TCP"></a>1.5 面向连接的传输——TCP</h2><p>在对TCP有大致的纹路了解后，我们进入TCP正式的探索。本着结构决定功能的特点，从TCP的段结构起笔，渲染TCP的可靠数据传输，进而浓墨于流量控制机制，最终落笔于连接管理。</p>
+<p><code>TCP提供的是点到点，可靠的，管道化的，按序的字节流，拥有流量控制机制，面向连接的服务。</code></p>
+<h3 id="段结构"><a href="#段结构" class="headerlink" title="段结构"></a>段结构</h3><p>TCP的报文段由一个<strong>首部字段和数据字段</strong>构成，数据字段即是应用层的数据，那这部分数据是源数据根据怎样的规则划分的呢？这里引入<strong>最大报文段长度MSS</strong>的概念。TCP会将要传输的文件分为若干个MSS。<strong>MSS的长度</strong>通常由<strong>本地发送主机发送的最大链路层帧长度</strong>来设置。在确定数据部分后，TCP为每个客户端数据配上一个<strong>TCP首部</strong>，从而形成多个TCP报文段。</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707224931500.png" alt="image-20210707224931500"></p>
+<p>具体来看每个字段：</p>
+<ul>
+<li><p><code>源端口号：</code>TCP提供的是进程之间的逻辑通信，而标识进程的即是端口号，标识源端口号就相当于给出了数据<strong>复用</strong>的路径。</p>
+</li>
+<li><p><code>目的端口号：</code>同样的，只有给出目的端口号，在接收方才能完成<strong>解复用</strong>的工作。</p>
+</li>
+<li><p><code>序号：</code>TCP把数据看做一个<strong>无结构，有序的字节流</strong>。而为了来标识每个报文段(<code>MSS</code>)的首字节在整个字节流中的位置，或者说偏移量，就引入了序号的概念。该序号的范围为<strong>2的32次方</strong>，可见冲突的几率比我中彩票还低~</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707225012629.png" alt="image-20210707225012629"></p>
+</li>
+<li><p><code>确认号：</code>在可靠数据传输中，我们使用ACK来作为确认字段，但ACK只能表示接收方对接收到数据的回应，而实际的传输是全双工，且高并发的。所以接收方的确认号将<strong>确认与下一次传输的数据相结合</strong>作为确认号。也就是说，假设确认号为2000,即表示<strong>期望收到的下一个字节的序号</strong>，这里给出的序号同样也具有<strong>GBN累计确认</strong>的意义。</p>
+<p>我们试着使用序号与确认号来描述简化的传输过程——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707225024780.png" alt="image-20210707225024780"></p>
+<p>即主机A发送序号42及对于序号79的确认，主机B收到后，发送对于序号42的确认，即ACK=43，且发送主机A期望的79，即seq=79.</p>
+</li>
+<li><p><code>接收窗口：</code>该字段用于<strong>流量控制</strong>，即指示接收方愿意接受的字节数量，在抓包的时候任一数据发送源都会使用<strong>Win字段</strong>来告诉另一方自己接收窗口的大小。</p>
+</li>
+<li><p><code>CRC校验和：</code>在UDP部分谈及过，用于<strong>检错</strong>。</p>
+</li>
+</ul>
+<p>而从进程通信的<code>流程框架</code>来看，TCP报文段又会经历怎样的<strong>复用与解复用</strong>呢——</p>
+<p>在形成报文段以后，这些报文段被下传给网络层，网络层将其分别封装在<strong>网络层IP数据报</strong>中，接着被发送到网络中，TCP在另一端接收报文段，该报文段被放在该<strong>TCP连接的接收缓存</strong>中，应用程序从缓存中读取数据流。</p>
+<h3 id="可靠数据传输"><a href="#可靠数据传输" class="headerlink" title="可靠数据传输"></a>可靠数据传输</h3><p>了解了确认号与序号，可靠数据传输的纹路已经逐渐明晰。在学习通用的rdt时，我们谈及当一个分组丢失时，超时重传机制是有必要的，这在TCP的机制中同样适用。但在TCP的机制中，我们需要将超时重传的机制具象化，即真正高效地使用。</p>
+<p>如何来估计超时重传的往返时间？<strong>定时器RTO</strong>应该设置多长时间？是否需要为每一个分组都设置一个定时器呢？我们来渐进式地解答——</p>
+<ol>
+<li><p>显然，定时器设置的时间应该是<strong>大于往返时间RTT</strong>的，所以我们可以随机地选取某一个RTT作为<strong>SampleRTT</strong>,但由于路由器的拥塞和网络负载均衡的特点，SampleRTT波动是很大的，所以为了更趋近于真实RTT，我们引入SampleRTT的均值EstimatedRTT。通过这两个标量，可以近似得到这样的公式：<br>$$<br>EstimatedRTT=（1-a）•EstimatedRTT+a•SampleRTT<br>$$<br>这里的a推荐值为<strong>0.125</strong>，将通过公式得到的均值称为之<strong>指数加权移动平均</strong>。</p>
+</li>
+<li><p>这里直接给出公式——<br>$$<br>Timeoutinterval=EstinMrtedRTT+4•DevRTT<br>$$<br>这里的DevRTT是为了解决波动问题，而引入的一个SampleRTT与EstimatedRTT之间差值。</p>
+</li>
+<li><p>TCP并不会为每个分组都维护一个定时器，因为高并发的发送维护定时器的代价是很大的，因此TCP使用了<strong>单一重传定时器机制</strong>。即只为<strong>发送缓冲区中最古老的已发送未确认分组</strong>维护定时器。</p>
+</li>
+</ol>
+<p>至此，TCP可靠数据传输的自肖像已经变得丰满起来。我们不妨在已经构建框架的前提下给出一个最简化的TCP发送方——<br><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707225039262.png" alt="image-20210707225039262">)</p>
+<p>即当超时定时器触发以后，发送方会传输<strong>至今没有得到确认的最小序号分组</strong>。即这里的机制又是类似于<strong>选择性重发SR</strong>。在重发后，超时定时器又会与当前没有得到确认的最小序号分组相关联。此外，还有一种情况，即缓冲区为空，即所有的分组都已得到确认，此时需要重启定时器。</p>
+<p>通过下图来看简要的交互：</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707225051029.png" alt="image-20210707225051029"></p>
+<p>另外，我们来穷举关于ACK的几种情况及相应的处理方式——</p>
+<table>
+<thead>
+<tr>
+<th><strong>接收方事件</strong></th>
+<th><strong>TCP接收方动作</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>所期望序号的报文段按序到达，期望序号之前的都已得到确认</td>
+<td>延迟的ACK，即对另一个按序报文段最多等待500ms</td>
+</tr>
+<tr>
+<td>有期望序号的报文段到达，另一个按需报文段等待发送ACK</td>
+<td>立即发送单个累积ACK，以确认两个按序报文段</td>
+</tr>
+<tr>
+<td>比期望序号大的报文段乱序到达，检测到数据流的间隔</td>
+<td>立即发送重复ACK，指明下一个期待字节的序号</td>
+</tr>
+<tr>
+<td>能部分或者完全填充接收数据间隔的报文段到达</td>
+<td>若该报文段起始于间隔的低端，则立即发送ACK</td>
+</tr>
+</tbody></table>
+<p>这个简化的TCP交互是默认不存在重复确认的，但实际上重复确认的情况是有可能出现的，TCP针对这种情况也给出了<strong>快速重传机制</strong>。</p>
+<p>收到<strong>重复确认</strong>往往是因为<strong>定时器设置的太大</strong>，接收方没有收到某个分组，但在定时器时间内仍会收到乱序到达的其他分组，这时接收方就会发送冗余分组，当发送方接收到<strong>三个冗余确认</strong>后，就会在定时期间<strong>重传最小序号的报文段</strong>。</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707225101991.png" alt="image-20210707225101991"></p>
+<p>再来看下快速重传的伪代码——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707225112511.png" alt="image-20210707225112511"></p>
+<p>即接收方收到ACK，判断ACK与窗口后沿的关系，假如<strong>ACK大于窗口后沿，则将窗口后沿滑动</strong>，将<strong>定时器与新的报文段关联</strong>。否则，也就是ACK重复的情况，则记录ACK重复的个数，当其等于3时，触发快速重传机制。</p>
+<h3 id="流量管理"><a href="#流量管理" class="headerlink" title="流量管理"></a>流量管理</h3><p>传输层在将数据解复用以后，不是直接交付给应用程序使用，而是将其放置在<strong>接收缓冲区</strong>内，上层应用再<strong>从缓冲区中读取数据</strong>。但当从发送方发送来的数据太多就有可能<strong>淹没接收缓冲区</strong>，导致报文段丢失，因此，约定发送方的发送速率与接收方的接收速率是必须的，这种<strong>为了匹配速率的机制就称为流量控制</strong>。</p>
+<p>流量控制机制是通过互相告知缓冲区可用空间来实现的。那如何告知呢？即是通过接收方向发送方发送的报文段中的<strong>rwnd字段</strong>，它表示了<strong>接收缓冲区中可用的空间</strong>。</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707225128655.png" alt="image-20210707225128655"></p>
+<p>我们将rwnd再具象化，即它是通过什么来实现的呢？接收窗口！！！但这里的接收窗口和rdt中的接收窗口还是有所区别的。为了量化接收窗口的大小，我们还需要引入两个变量：</p>
+<ul>
+<li><code>LastByteRead</code>:主机B上的应用进程从缓存读出的数据流的最后一个字节的编号。</li>
+<li><code>LastByteRcvd</code>:从网络中到达的并且已放入主机B接收缓存中的数据流的最后一个字节的编号。</li>
+</ul>
+<p>那么接收窗口就可以表示为：<br>$$<br>rwnd=RcvBuffer-[LastByteRcvd-LastByteRead]<br>$$</p>
+<h3 id="连接管理"><a href="#连接管理" class="headerlink" title="连接管理"></a>连接管理</h3><p>我们来深入了解如何建立和拆除一个TCP连接，首先，我们需要建立一些共识，也就是连接都需要做什么？</p>
+<p>在socketAPI的编程中，我们需要维护两个套接字，即连接是针对双方而言的，<strong>每一端可以看做维护一个半连接</strong>，所以在建立TCP连接时，两端都有<strong>告诉对方我要建立连接</strong>的诉求。除此之外，还需要<strong>为连接配置资源</strong>，因为连接就意味着马上会有数据传输，所以<strong>缓冲区自然是需要</strong>的，此外，<strong>序号和确认号也是必选项</strong>咯。</p>
+<h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><p>好啦，实际地去建立连接时，首先先入为主的想法是两次握手——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707225141658.png" alt="image-20210707225141658"></p>
+<p>但两次握手面临着很多问题：</p>
+<ul>
+<li>假如接收方的确认超时了，此时发送方会重发连接建立请求。但我们注意到<strong>接收方的机制简言之就是收到连接请求则同意建立</strong>。也就是说，虽然确认超时了，但接收方仍会维护一个<strong>半连接的状态</strong>及对应的资源。</li>
+<li>在上面状况的基础上，假如发送方接收到确认后，发送数据data，而接收data的接收方的状态为新的连接，那么此时<strong>新的连接接收的是老连接的数据</strong>。</li>
+</ul>
+<p>这些问题的症结本质上是<strong>半连接的孤立</strong>，那么如果<strong>在双方半连接的基础上增加两个半连接的交互</strong>，那问题就迎刃而解了。三次握手就是基于这样的思想实现的。我们来详细剖析三次握手的详细过程——</p>
+<ol>
+<li><p><code>第一次握手：</code>客户端的TCP首先向服务器端的TCP发送一个特殊的TCP报文段。该报文段中<strong>不包含应用层数据</strong>。但是在报文段的首部中的一个标志位（即<strong>SYN</strong>比特）<strong>被置为1</strong>。因此，这个特殊报文段被称为<strong>SYN报文段</strong>。另外，客户会<strong>随机地选择一个初始序号</strong>（client_isn）,并将此编号放置于该起始的TCPSYN报文段的序号字段中。</p>
+</li>
+<li><p><code>第二次握手：</code>服务器会从该数据报中提取出SYN报文段，为该TCP连接<strong>分配TCP缓存和变量</strong>，并向该客户TCP发送允许连接的报文段。这个允许连接的报文段<strong>也不包含应用层数据</strong>。但是，在报文段的首部却包含<strong>3个重要的信息</strong>。</p>
+<ol>
+<li>SYN比特被置为1。</li>
+<li>TCP报文段首部的确认号字段被置为<strong>client_isn+I</strong></li>
+<li>服务器选择自己的初始序号（<strong>serverjsn</strong>）,并将其放置到TCP报文段首部的序号字段中。这个允许连接的报文段实际上表明了：<strong>“我收到了你发起建立连接的SYN分组，该分组带有初始序号clientjsno我同意建立该连接。我自己的初始序号是serverjsnon</strong></li>
+</ol>
+<p>该允许连接的报文段被称为<strong>SYNACK报文段</strong>.</p>
+</li>
+<li><p><code>第三次握手:</code>在收到ACK报文段后，客户也要给该连接<strong>分配缓存和变</strong>量。客户主机则向服务器发送另外一个报文段；这最后一个报文段<strong>对服务器的允许连接的报文段进行了确认</strong>（该客户通过<strong>将值serverjsn+1放置到TCP报文段首部的确认字段</strong>中来完成此项工作）。因为连接已经建立了，所以该<strong>SYN比特被置为0</strong>。该三次握手的第三个阶段可以在报文段<strong>负载中携带客户到服务器的数据</strong>。</p>
+</li>
+</ol>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707225201937.png" alt="image-20210707225201937"></p>
+<p>嗯，熟悉的FSM环节——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707225214552.png" alt="image-20210707225214552"></p>
+<hr>
+<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><p>天下没有不散的宴席。TCP连接也不能免俗。相比于三次握手，四次挥手还是水到渠成的，双端都可以主动发起断开连接的请求，然后<strong>双方断开自己维护的半连接</strong>即可，同样的，我们来复现这个过程——</p>
+<ol>
+<li>客户端进程向服务器进程发送一个特殊的报文段，该报文段中首部标志位<strong>FIN置1</strong>；</li>
+<li>服务器接收该报文段后，<strong>其ACK比特置1</strong>.</li>
+<li>反向同理。</li>
+</ol>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707225225357.png" alt="image-20210707225225357"></p>
+<h2 id="1-6-拥塞控制原理"><a href="#1-6-拥塞控制原理" class="headerlink" title="1.6 拥塞控制原理"></a>1.6 拥塞控制原理</h2><hr>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在rdt可靠数据传输机制中，分组丢失是不可避免的，而<strong>分组丢失的原因通常是由网络拥塞</strong>，当路由器的缓存被占满后，后来者将会别抛弃，本质上说这种状况是因为网络是不可控的，很难从端系统获知网络的状况，但发送方又本着<code>多多益善</code>的方式在加剧网络的恶化。</p>
+<p>为了避免网络拥塞，TCP使用了怎样的机制，这种处理机制出发点是什么，它针对性地解决了哪些问题，如此种种。要解决这些问题，我们仍要铺好第一块砖石——</p>
+<p><code>网络拥塞的定义</code>：太多的数据需要网络传输，超过了网络的处理能力。</p>
+<h3 id="拥塞原因与表现"><a href="#拥塞原因与表现" class="headerlink" title="拥塞原因与表现"></a>拥塞原因与表现</h3><p>这里我们仍使用渐进式分析问题的思想，一个不会发生分组丢失的网络是怎样的呢？</p>
+<ul>
+<li><p><code>路由器缓存无限大</code></p>
+</li>
+<li><p><code>端系统可以了解网络的状况并作出调整。</code></p>
+</li>
+<li><p><code>所有分组都可以不超时的到达，所以不需要重传</code></p>
+</li>
+</ul>
+<p>先来看路由器缓存，假设路由器缓存无限大，那分组就不会被丢弃。这时假设有两个发送端通过一条链路(带宽为R)发送数据，那么它的吞吐量和延时表现为这样——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707225238081.png" alt="image-20210707225238081"></p>
+<p>可见，即便在理想状态下，当超出链路的承载能力后，<code>流量强度变大，排队延时激增</code>。硬件条件这是不可逾越的天花板。所以我们很难控制不发生拥塞，而要从拥塞发生后的处理技巧入手。</p>
+<p>接着，我们去掉缓存无限的假设，这时分组丢失就变得无可避免，分组丢失就意味着重传，而<code>重传导致链路中重复的分组</code>，也就是不必要的分组增多，直接使得<code>发送方比接收方更高的发送速率</code>，导致本就不宽裕的链路带宽更显的捉襟见肘。另外，超时重传作用的结果也是一样的。</p>
+<p>最后，我们设想在类似<code>进程发生死锁</code>的一种情景，每个发送方占用着别的发送方需要的链路带宽，而别的进程也占用着自己需要的链路带宽，如果人的欲望一般，我们知道这条路是错的，但贪念仍在驱使着躯干向前。</p>
+<h3 id="拥塞控制的方式"><a href="#拥塞控制的方式" class="headerlink" title="拥塞控制的方式"></a>拥塞控制的方式</h3><p>针对上面的状况，一般采用两种控制拥塞的方法——</p>
+<ul>
+<li><code>端对端的拥塞控制：</code>TCP就使用这种策略。端系统根据<code>延迟和丢失事件</code>推断是否有拥塞。</li>
+<li><code>网络辅助的拥塞控制：</code>路由器通过<code>置位</code>的方式显示的告诉发送端可以采用的速率。</li>
+</ul>
+<p>来通过实际的<strong>ATM ABR场景</strong>认识下这两种方式是怎样实际运转的：</p>
+<p>我们知道，在网络中传输的数据粒度是有区别的，专线更多使用线路交换的方式，而通用的则是分组交换的方式，这种在银行中大行其道的ATM ABR线路则使用数据粒度<code>介于线路交换和分组交换的粒度大小</code>，更具体地说，它传输的最小单元是<code>53个的比特</code>。</p>
+<p>**ABR(available bit rate)**提供的是弹性服务，它可以<code>根据网络的负载实时调整发送速率</code>。如果发送方路径轻载，则发送方就使用尽可能多地利用贷款。如果发送方路径阻塞，发送方限制速率至一个最小保障速率。</p>
+<p>那网络中的拥塞状况是如何被获知的呢？通过RM信元，即<strong>资源管理信元</strong>。</p>
+<p>它由发送端发送，在数据信元中间隔插入，通过该信元特定的比特位来作为网络辅助，这种行之有效的比特位分别是：</p>
+<ul>
+<li><code>NI bit:</code>即no increase in rate。</li>
+<li><code>CI bit:</code>即congestion indication拥塞指示。</li>
+</ul>
+<p>发送方发送的RM信元被接收方返回，<code>接收方仅用作中转</code>使用。另外，之前谈及信元可以返回给发送方最小发送速率，这是如何实现的呢？</p>
+<p>通过RM信元中的2个字节<code>ER(explicit rate)字段</code>.拥塞的交换机会降低ER的值，最终返回给发送方。</p>
+<hr>
+<h2 id="1-7-TCP拥塞"><a href="#1-7-TCP拥塞" class="headerlink" title="1.7 TCP拥塞"></a>1.7 TCP拥塞</h2><p>在上一小节中，我们聊了通用的拥塞控制机制，也就是：<strong>端系统处理</strong>，<strong>网络辅助的拥塞控制</strong>。同时对网络辅助的案例做了简单描述，这一小节，我们将展开讲述在端系统如何处理拥塞。</p>
+<p>更具体地说，是<strong>TCP的拥塞控制机制</strong>。而在开始之前，我们先解决一个前置问题：TCP<code>为什么不在网络核心通过使用辅助信元的方式实现拥塞控制</code>。其实，纵观整个网络架构，复杂性都是在传输层及其以上提供的，也就是说，<code>网络层不会向上层应用提供显式的拥塞控制机制</code>。</p>
+<p>那TCP的拥塞控制机制是怎样实现的呢？不着急，本着先有问题，再有方案的思路，我们先来回答TCP拥塞机制面临的<strong>三大问题</strong>——</p>
+<ul>
+<li><p><code>如何感知到拥塞</code></p>
+<p>网络拥塞的最终结果是分组丢失，而导致分组丢失的原因却有一些区别——</p>
+<ol>
+<li>假如到达路由器的分组过多导致缓冲区已满，<strong>分组就会被丢弃</strong>。此外，有可能分组在传输时比特反转，接收方认不出来这是啥，那也会将其丢弃。这两种情况的直观表现都是超时，这种<code>拥塞情节严重</code>，发送方明显被动。</li>
+<li>当发送方连续收到4个ACK信号，也就是<strong>3个冗余ACK</strong>时，就会触发快速重传机制，这时还没有超时，发送方主动出手降低损失，姑且称其<code>轻微拥塞</code>。</li>
+</ol>
+</li>
+<li><p><code>如何对速率做调整</code></p>
+<p>那明确了问题，如何针对两种拥塞做出发送速率的调整呢？在<strong>RDT</strong>中，我们引入<code>接收窗口rwnd</code>来限制接收分组，这里我们也采用类似的机制，引入<code>拥塞窗口cwnd</code>。类比接收窗口表示能够接收分组的上限，拥塞窗口表示的即是——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707225253295.png" alt="image-20210707225253295"></p>
+<p>是不是似曾相识，发送窗口表示的是<strong>实际的</strong>已发送未确认的分组数量。而拥塞窗口就如同在对发送窗口做<strong>动态调整</strong>，除此之外，别无二致。那确定了拥塞窗口的值，发送方的发送速率也可以得出来——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707225302111.png" alt="image-20210707225302111"></p>
+</li>
+<li><p><code>通过怎样的算法对速率做调整：</code></p>
+</li>
+</ul>
+<p>有了衡量拥塞的标志，接下来就需要通过拥塞状况触发动态调整啦，这里的动态调整，就是广受赞誉的<strong>TCP拥塞控制算法</strong>。</p>
+<p>该算法分为三部分：慢启动，拥塞避免，快速恢复。我们详细来聊聊——</p>
+<ul>
+<li><p><code>慢启动：</code></p>
+<p>TCP会将cwnd的值<code>初始化为一个2/3/4MSS</code>(具体由MSS的大小决定)的值，但显然，这点速率是不够打的，所以当分组首次被确认后，会以<code>指数级的增长趋势</code>尽快加速，直至超时后打回原形，也就是1个MSS.这时，TCP还会维护一个<strong>慢启动阈值</strong>，也就是警戒值，它的值为<strong>cwnd(max)/2</strong>，接着，开始下一次拥塞控制，当cwnd的值指数增加至慢启动阈值后，不再鲁莽地指数级增长，而是维持<code>线性增长</code>。</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707225311975.png" alt="image-20210707225311975"></p>
+<p>这种线性增长的机制就是拥塞避免——</p>
+</li>
+<li><p><code>拥塞避免：</code></p>
+<p>那拥塞避免什么时候结束呢？和慢启动一样，拥塞避免阶段在触发超时后会重新开始SS慢启动阶段,这时，慢启动的阈值也势必会更新。</p>
+<p>再来讨论下发送方收到<strong>3个冗余ACK</strong>的状况——</p>
+<p>它的处理机制显然没必要像拥塞时那么剧烈，只需要在触发快速重传后，记录慢启动阈值，然后<code>直接从阈值开始线性增加</code>进入快速恢复阶段——</p>
+</li>
+<li><p><code>快速恢复：</code></p>
+<p>所谓的快速恢复无非是针对两种拥塞状况的不同种处理，在上面已经提及，就不再赘述。</p>
+<ol>
+<li>超时重传：RFC建议将拥塞窗口降至1个MSS，而由慢启动过渡至拥塞窗口的值就有讲究了，应该调整至没别确认的数据量的1/2,但不能小于两个MSS</li>
+<li>快速恢复：不会处理拥塞窗口的值；</li>
+</ol>
+</li>
+</ul>
+<p>接下来就是小总结环节——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707225324365.png" alt="image-20210707225324365"></p>
+<p>再将两种情况汇总，就有了下图——</p>
+<p><img src="C:\Users\zyz\AppData\Roaming\Typora\typora-user-images\image-20210304182714108.png" alt="image-20210304182714108"></p>
+<h3 id="TCP吞吐量"><a href="#TCP吞吐量" class="headerlink" title="TCP吞吐量"></a>TCP吞吐量</h3><p>这里我们取快速恢复阶段的数据量均值作为参考(慢启动指数级的增加实则很快，也导致实际传输的流量不多)，即——<br>$$<br>一条连接的平均吞吐量=3/4<em>W/RTT<br>$$<br>另外也给出在<code>经过高带宽TCP，且丢包率为L的情况</code>下，吞吐量的描述——<br>$$<br>一条连接的平均吞吐量：1.22</em>MSS/RTT/根号下2<br>$$</p>
+<h3 id="TCP公平性"><a href="#TCP公平性" class="headerlink" title="TCP公平性"></a>TCP公平性</h3><p>太饿了，去吃饭，偷懒一手——</p>
+<p><img src="https://gitee.com//future727/imgs/raw/master/zyz_img3/image-20210707225338648.png" alt="image-20210707225338648"></p>
+<p>也就是多个TCP连接时，网络状况会趋向于<code>带宽均分</code>。</p>
+<p>而如果一个链路中既有使用TCP的服务，也有使用UDP的服务，那对于TCP是不友好的，因为<code>UDP百无禁忌</code>，它没有拥塞控制机制，如果有可能，UDP会一点点的蚕食掉带宽，而最终导致更恶劣的后果，可见，<strong>不限制贪欲最终会陷入恶性循环</strong>。但这种机制也并非一无是处，流媒体就表示这是我的菜，因为<code>音视频应用起码泵出数据的速率是恒定</code>的，即便数据会丢失。</p>
+<hr>
+<h2 id="抓包番外"><a href="#抓包番外" class="headerlink" title="抓包番外"></a>抓包番外</h2><h3 id="简单的代价——UDP"><a href="#简单的代价——UDP" class="headerlink" title="简单的代价——UDP"></a>简单的代价——UDP</h3><h3 id="DNS那些事"><a href="#DNS那些事" class="headerlink" title="DNS那些事"></a>DNS那些事</h3><p><img src="https://zyz-img.oss-cn-chengdu.aliyuncs.com/img/image-20210506232028231.png" alt="image-20210506232028231"></p>
+<p>DNS常用的<strong>应用场景</strong>有两种：</p>
+<ul>
+<li><p><code>CNMAE:</code>即将一个域名映射到另一个域名，</p>
+<p><img src="https://zyz-img.oss-cn-chengdu.aliyuncs.com/img/image-20210506234636802.png" alt="image-20210506234636802"></p>
+</li>
+<li><p><code>A：</code>请求获取域名对应的IP地址</p>
+<p><img src="https://zyz-img.oss-cn-chengdu.aliyuncs.com/img/image-20210506234517700.png" alt="image-20210506234517700"></p>
+</li>
+</ul>
+<p>当DNS在缓存中没有找到要查询的记录后，就会发起<strong>DNS查询</strong>，查询有两种：递归查询，迭代查询。假如我们向一个<code>不权威的DNS服务器发起递归查询请求</code>，我们只会与这个不权威的DNS服务器交互，而<code>无从得知它的查询结果是否可靠</code>。迭代查询则会相对安全一些，因为客户端首先会查到根服务器的地址，再从根服务器查到权威服务器，然后从权威服务器查询。。。直到返回想要的结果。</p>
+<p>它的<strong>响应</strong>一般包含这些字段：</p>
+<p><img src="https://zyz-img.oss-cn-chengdu.aliyuncs.com/img/image-20210506235701873.png" alt="image-20210506235701873"></p>
+<p>再来聊一些生僻的：<strong>DNS循环工作模式</strong>——</p>
+<p>假如某个网站有10台Web服务器，管理员可以在DNS创建10个同名记录指向这些服务器的IP，由于不同客户端查到的结果顺序不同，而且一般会选用结果中的第一个IP，所以大量客户端就会被均衡的分配到10台Web服务器上，也就是<code>负载均衡</code>咯。</p>
+<p>再来说说<strong>DNS的缺点</strong>，为人所知的<code>DNS放大攻击</code>就是缺陷之一，假如有这样的场景：我们由包发出去的请求只有少许字节，但收到的回复却高达几千字节，这种情况非常值得我们警惕。</p>
+<h3 id="老生常谈的TCP"><a href="#老生常谈的TCP" class="headerlink" title="老生常谈的TCP"></a>老生常谈的TCP</h3><p><img src="https://zyz-img.oss-cn-chengdu.aliyuncs.com/img/image-20210506235956824.png" alt="image-20210506235956824"></p>
+<p>这个包抓的还是<code>恰如其分</code>的，它完美的涵盖了三次握手与四次挥手的7个包，同时出现的<code>乱序问题</code>也印证了TCP的强大之处。接下来我们分别从三次握手和四次挥手来分析它的细节——</p>
+<p><strong>三次握手</strong>：</p>
+<ul>
+<li><p><code>SYN报文段</code></p>
+<p>在这个帧中，包含了Seq,Win，Len等字段，显然<code>Seq表示随机选择的报文段的初始字节偏移量</code>，而Win就比较有意思了，我们可能更熟悉它的另一个名称：rwnd，也就是说<code>Win就是接收窗口的大小</code>，只不过描述字段有区别，至于Len字段，见名知意，它描述了报文段的长度，但这并不包含报文头部的长度，所以<code>Len为0只能说明没有数据传输</code>。</p>
+</li>
+<li><p><code>SYN/ACK报文段：</code></p>
+</li>
+</ul>
+<p><img src="https://zyz-img.oss-cn-chengdu.aliyuncs.com/img/image-20210507092224812.png" alt="image-20210507092224812"></p>
+<p>显然，TCP报文段（一个MSS长度）的<code>头部包含32个字节</code>，而我们常说的<code>XX报文段其实就是通过置位来标识</code>的。</p>
+<ul>
+<li><p><code>ACK报文段</code></p>
+<p><img src="https://zyz-img.oss-cn-chengdu.aliyuncs.com/img/image-20210507093012217.png" alt="image-20210507093012217"></p>
+<p>我们试图再发现一些新颖的事物，在这个窗口我们看到<code>一个包被接口过滤器（网口）收到的完整过程</code>，它依次经历了物理层，数据链路层，网际层，传输层。</p>
+</li>
+</ul>
+<p><strong>四次握手</strong></p>
+<ul>
+<li><p><code>SYN/ACK报文段：</code></p>
+<p><img src="https://zyz-img.oss-cn-chengdu.aliyuncs.com/img/image-20210507093632419.png" alt="image-20210507093632419"></p>
+<p>显然，在发送该报文段后<code>不再发送数据，但仍然可以接收数据</code>。</p>
+</li>
+<li><p><code>ACK报文段</code></p>
+<p><img src="https://zyz-img.oss-cn-chengdu.aliyuncs.com/img/image-20210507093904412.png" alt="image-20210507093904412"></p>
+<p>显然，ACK包乱序了，但它仍可以被接收，这依赖于<code>TCP的累计确认</code>，也就是说TCP只关心发送的最古老的的那个包有没有被收到，如果<code>有乱序的包到达，它会将其放置在接收窗口而不给与确认</code>，在收到最古老的的那个包后，它会接收该包并累计确认，应用层再从接收窗口中读取这些包。</p>
+</li>
+</ul>
+<p>最后再来看一个非常有用的命令：<strong>netstat</strong></p>
+<p><img src="https://zyz-img.oss-cn-chengdu.aliyuncs.com/img/image-20210507095047707.png" alt="image-20210507095047707"></p>
+<p>这是我使用netstat命令陈列出来的TCP连接状态，我们发现有这样几种状态：</p>
+<ol>
+<li><p>TIME_WAIT:</p>
+<p>TIME_WAIT又称<code>2MSL状态</code>(报文段最大存活时间)，被动关闭方在收到FIN并回复ACK后会进入该状态，它的作用主要有两个：</p>
+<ol>
+<li><p>允许老的重复报文分组在网络中消逝，<code>避免新连接接收老连接的数据</code>。</p>
+</li>
+<li><p>保证TCP全双工连接的正确关闭，<code>避免RST拒绝服务</code>。</p>
+</li>
+</ol>
+</li>
+<li><p>ESTABLISHED:</p>
+<p>表示<code>数据传输正在进行</code></p>
+</li>
+<li><p>CLOSE_WAIT</p>
+<p>正常状态，会<code>很快转化为LAST_WAIT</code>,只出现在被动关闭方。</p>
+</li>
+</ol>
+<h3 id="历久弥新的HTTP"><a href="#历久弥新的HTTP" class="headerlink" title="历久弥新的HTTP"></a>历久弥新的HTTP</h3><p><img src="https://zyz-img.oss-cn-chengdu.aliyuncs.com/img/image-20210506232400891.png" alt="image-20210506232400891"></p>
+<hr>
+<blockquote>
+<p>山高路远，静水深流</p>
+</blockquote>
+
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《计算机网络传输层》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/07/12/ji-suan-ji-wang-luo-chuan-shu-ceng/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                归处
+            </a> 采用
+            <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+    <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '查教程获取',
+        clientSecret: '查教程获取',
+        repo: 'godweiyang.github.io',
+        owner: 'godweiyang',
+        admin: "godweiyang",
+        id: '2021/07/12/ji-suan-ji-wang-luo-chuan-shu-ceng/',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<!-- <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> -->
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '查教程获取',
+        appKey: '查教程获取',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/07/12/na-nian-shen-qiu-zai-jiao-shi-lin-chuang-xie-xia-de-hui-bian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="那年深秋,在教室临窗写下的汇编">
+                        
+                        <span class="card-title">那年深秋,在教室临窗写下的汇编</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            前言1. 为什么要学习汇编语言？编程语言发展到如今，高级语言大行其道，他们通常被标榜为学习成本低。但由于高级语言不是直接调用操作系统，因而执行效率相对低一些。
+比如java语言，java源文件首先被编译，然后经过JVM的连接，最终执行得到运
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-07-12
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" target="_blank">
+                                    计算机基础
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/intel8086%E6%B1%87%E7%BC%96/" target="_blank">
+                        <span class="chip bg-color">intel8086汇编</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/07/12/ji-suan-ji-wang-luo-ying-yong-ceng/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="计算机网络应用层">
+                        
+                        <span class="card-title">计算机网络应用层</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            摘要到第二章我们就将进入具体5层协议栈的描述，更具体地说，是从顶层应用层开始，渐进地学习计算机网络。我们知道，应用层是在传输层提供的服务上实现应用进程通信的，也就是借助操作系统使用Socket API的方式实现的。那基于Socket API
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-07-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" target="_blank">
+                                    计算机基础
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" target="_blank">
+                        <span class="chip bg-color">计算机网络</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%8A%93%E5%8C%85/" target="_blank">
+                        <span class="chip bg-color">抓包</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 归处的博客<br />'
+            + '作者: 归处<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+<!-- 代码语言 -->
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+<!-- 代码块复制 -->
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
+<!-- 代码块收缩 -->
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
+<!-- 代码块折行 -->
+<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2017-2020 WeiYang. 版权所有
+
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">96.4k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+            <br>
+            
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                <i class="fa fa-heart-o"></i>
+                本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv" style='display:none'>
+                人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+            </span>
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/godweiyang" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:godweiyang@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/godweiyang" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=792321264&site=qq&menu=yes" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="https://weibo.com/godweiyang" class="tooltipped" target="_blank" data-tooltip="关注我的微博" data-position="top" data-delay="50">
+        <i class="fa fa-weibo"></i>
+    </a>
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2017, 09, 11, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=查教程获取"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '查教程获取');
+</script>
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>
