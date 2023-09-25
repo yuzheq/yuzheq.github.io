@@ -116,8 +116,8 @@ theme: matery
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
 - type: git
-  repository: 
-    github: git@github.com:YuZhe727/YuZhe727.github.io.git
+  repository:
+    github: git@github.com:yuzheq/yuzheq.github.io.git
     # coding: git@e.coding.net:godweiyang/godweiyang.git
   branch: main
 - type: baidu_url_submitter
